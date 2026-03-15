@@ -187,15 +187,48 @@
 
 <script>
     const items = document.querySelectorAll('.carousel-item');
+    const carouselContainer = document.getElementById('carousel');
     let currentItem = 0;
+    let touchStartX = 0;
+    let touchEndX = 0;
 
-    function showNextImage() {
+    // 1. Function to change slides
+    function showSlide(index) {
         items[currentItem].classList.replace('opacity-100', 'opacity-0');
-        currentItem = (currentItem + 1) % items.length;
+        currentItem = (index + items.length) % items.length;
         items[currentItem].classList.replace('opacity-0', 'opacity-100');
     }
 
-    setInterval(showNextImage, 4000); // Changes image every 4 seconds
+    // 2. Automatic Transition
+    let autoPlay = setInterval(() => showSlide(currentItem + 1), 4000);
+
+    function resetTimer() {
+        clearInterval(autoPlay);
+        autoPlay = setInterval(() => showSlide(currentItem + 1), 4000);
+    }
+
+    // 3. Swipe Logic
+    carouselContainer.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    carouselContainer.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, {passive: true});
+
+    function handleSwipe() {
+        const swipeThreshold = 50; // pixels
+        if (touchStartX - touchEndX > swipeThreshold) {
+            // Swiped Left -> Next Image
+            showSlide(currentItem + 1);
+            resetTimer();
+        } else if (touchEndX - touchStartX > swipeThreshold) {
+            // Swiped Right -> Previous Image
+            showSlide(currentItem - 1);
+            resetTimer();
+        }
+    }
 </script>
 <script>
     const weddingDate = new Date("June 16, 2026 14:00:00").getTime();
