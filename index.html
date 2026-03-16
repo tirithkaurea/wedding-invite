@@ -159,7 +159,7 @@
                 </select>
             </div>
 
-            <div class="attend-times">
+            <div id="attendance-options" class="hidden">
                 <label class="block text-sm font-semibold uppercase tracking-wide mb-2">Tick all that apply</label>
                 <div class="space-y-3 mt-3">
                     <label class="flex items-center space-x-3 cursor-pointer group">
@@ -262,6 +262,25 @@
             document.getElementById("countdown").innerHTML = "<p class='text-2xl italic'>Today is the day!</p>";
         }
     }, 1000);
+</script>
+<script>
+    // Target the select menu and the hidden options div
+const attendanceSelect = document.querySelector('select[name="attendance"]');
+const attendanceOptions = document.getElementById('attendance-options');
+
+attendanceSelect.addEventListener('change', function() {
+    if (this.value === 'yes') {
+        // Show the options with a simple fade-in effect if you like, 
+        // or just remove the hidden class
+        attendanceOptions.classList.remove('hidden');
+    } else {
+        // Hide them again if they switch to "Decline" or the default
+        attendanceOptions.classList.add('hidden');
+        
+        // Optional: Uncheck the boxes if they are hidden to keep data clean
+        attendanceOptions.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+    }
+});
 </script>
 
 </body>
