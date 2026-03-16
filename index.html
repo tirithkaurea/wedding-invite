@@ -152,13 +152,14 @@
 
             <div>
                 <label class="block text-sm font-semibold uppercase tracking-wide mb-2">Will you attend?</label>
-                <select name="attendance" class="w-full p-3 border border-stone-300 rounded focus:outline-none focus:border-blue-600">
+                <select name="attendance" required class="w-full p-3 border border-stone-300 rounded focus:outline-none focus:border-blue-600">
+                    <option disabled selected value="">Please select</option>
                     <option value="yes">Joyfully Accept</option>
                     <option value="no">Regretfully Decline</option>
                 </select>
             </div>
 
-            <div>
+            <div class="attend-times">
                 <label class="block text-sm font-semibold uppercase tracking-wide mb-2">Tick all that apply</label>
                 <div class="space-y-3 mt-3">
                     <label class="flex items-center space-x-3 cursor-pointer group">
